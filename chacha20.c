@@ -141,5 +141,5 @@ void ChaCha20XOR(uint8_t key[32], uint32_t counter, uint8_t nonce[12], uint8_t *
 // WEBGRAFÍA
 /*
 > https://docs.microsoft.com/es-es/cpp/c-language/bitwise-shift-operators?view=msvc-160
-
+> http://www.cplusplus.com/reference/cstring/memcpy/
 */
