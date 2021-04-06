@@ -17,7 +17,7 @@
 /*
  * Función convierte int to LittleEndian
  */
-static inline void u32t8le(uint32_t v, uint8_t p[4]) {
+static inline void intToLEndian(uint32_t v, uint8_t p[4]) {
   p[0] = v & 0xff;
   p[1] = (v >> 8) & 0xff;
   p[2] = (v >> 16) & 0xff;
@@ -27,7 +27,7 @@ static inline void u32t8le(uint32_t v, uint8_t p[4]) {
 /*
  * Función convierte littleEndian to int
  */
-static inline uint32_t u8t32le(uint8_t p[4]) {
+static inline uint32_t lEndianToInt(uint8_t p[4]) {
   uint32_t value = p[3];
 
   value = (value << 8) | p[2];
@@ -91,7 +91,7 @@ static void chacha20Block(uint32_t in[16], uint8_t out[64], int rounds) {
   // Para los operadores de desplazamiento a la izquierda sin desbordamiento, desplaza cada 2 posiciones de byte
   // esto es porque trabajo con hexadecimal y paso a byte con littleEndian
   for (i = 0; i < 16; i++) { 
-    u32t8le(in[i], out + (i << 2));
+    intToLEndian(in[i], out + (i << 2));
   }
 }
 
@@ -108,7 +108,7 @@ static void ChaCha20SC(uint32_t stateMatrix[16], uint8_t key[32], uint8_t nonce[
 
   // Asignamos el la clave
   for (i = 0; i < 8; i++) {
-    stateMatrix[4 + i] = u8t32le(key + i * 4);
+    stateMatrix[4 + i] = lEndianToInt(key + i * 4);
   }
 
   // StateMatrix en la posición 12 va el contador
@@ -116,7 +116,7 @@ static void ChaCha20SC(uint32_t stateMatrix[16], uint8_t key[32], uint8_t nonce[
 
   // Asignamos Nonce
   for (i = 0; i < 3; i++) {
-    stateMatrix[13 + i] = u8t32le(nonce + i * 4);
+    stateMatrix[13 + i] = lEndianToInt(nonce + i * 4);
   }
 }
 
